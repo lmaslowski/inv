@@ -27,8 +27,8 @@ class InvoicePdfBuilder{
     
     public function build(){
         
-		//Logo
-        //$this->buildLogo();
+	//Logo
+        $this->buildLogo();
 
         //Status
         $this->buildStatus($this->getInvoicePdfDataContainer()->getInvoiceDetails()->getStatus(),  $this->getInvoicePdfDataContainer()->getInvoiceDetails()->getStatusName());
