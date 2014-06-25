@@ -6,7 +6,10 @@ function InvoiceAutoloader($class) {
 		// convert namespace to full file path
 		$class = dirname(__FILE__) . '/../' . str_replace('\\', '/', $class) . '.php';
 		
-		require_once($class);
+		if(file_exists($class)){
+		    require_once($class);
+		}
+		
 	}
 }
 spl_autoload_register('InvoiceAutoloader');

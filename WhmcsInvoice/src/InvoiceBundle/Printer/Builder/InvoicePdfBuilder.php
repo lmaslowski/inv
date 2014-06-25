@@ -28,7 +28,7 @@ class InvoicePdfBuilder{
     public function build(){
         
 		//Logo
-//          $this->buildLogo();
+        $this->buildLogo();
 
         //Status
         $this->buildStatus($this->getInvoicePdfDataContainer()->getInvoiceDetails()->getStatus(),  $this->getInvoicePdfDataContainer()->getInvoiceDetails()->getStatusName());
@@ -41,7 +41,7 @@ class InvoicePdfBuilder{
         $datecreated = $this->getInvoicePdfDataContainer()->getInvoiceDetails()->getCreateData();
         $dateCreatedLabel = 'Data wystawienia';
         $duedate = $this->getInvoicePdfDataContainer()->getInvoiceDetails()->getPaymentTerm();
-        $dueDateLabel = 'Termin platnosci';
+        $dueDateLabel = 'Termin płatnosci';
         
         $firma1kol =  $this->getInvoicePdfDataContainer()->getInvoiceSeller()->getName();
         $firma2kol =  $this->getInvoicePdfDataContainer()->getInvoiceSeller()->getAddress();

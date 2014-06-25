@@ -71,6 +71,7 @@ class PdfStorageImpl implements PdfStorage{
             switch ($ext) {
                 case "pdf":
                     header("Content-type: application/pdf"); // add here more headers for diff. extensions
+                    header("Content-Disposition: attachment; filename=archive-".$invoiceNum.".pdf");
                     break;
                 default;
                 header("Content-type: application/octet-stream");

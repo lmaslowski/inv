@@ -17,7 +17,7 @@ class InvoicePdfDataConteinerBuilder{
         $invoiceSeller->setPostCode('31-533');
         $invoiceSeller->setCity('Kraków');
         $invoiceSeller->setNip('675-140-29-20');
-        $invoiceSeller->setAccountNumber('111-3333-3333-333-333-33333');
+        $invoiceSeller->setAccountNumber('67 1060 0076 0000 3310 0021 1458');
         
         $invoiceBuyer = new InvoiceBuyer();
         $client = $invoiceWrapper->getClient();
