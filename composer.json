@@ -4,5 +4,10 @@
     },
     "require": {
     	"tecnick.com/tcpdf": "6.0.013"
+    },
+    "autoload": {
+        "psr-0": {
+            "InvoiceBundle\\": "WhmcsInvoice/src/"
+        }
     }
 }

@@ -12,10 +12,15 @@
 // use Service\InvoiceServiceImpl;
 
 
+require_once 'vendor/autoload.php';
+
+
+
+
 use InvoiceBundle\Service;
 
-require_once './WhmcsInvoice/src/InvoiceBundle/InvoiceAutoloader.php';
-require_once './vendor/tecnick.com/tcpdf/tcpdf.php';
+// require_once './WhmcsInvoice/src/InvoiceBundle/InvoiceAutoloader.php';
+// require_once './vendor/tecnick.com/tcpdf/tcpdf.php';
 
 
 
