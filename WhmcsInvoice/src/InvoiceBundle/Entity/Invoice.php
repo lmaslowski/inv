@@ -72,6 +72,11 @@ class Invoice{
         return $this->paymentDate;
     }
     
+    public function getPaymentDateFormat($format){
+        $date = new \DateTime($this->paymentDate);
+        return $date->format($format);
+    }
+    
     public function setNetPrice($netPrice){
         $this->netPrice =  $netPrice;
     }
