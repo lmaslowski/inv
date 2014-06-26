@@ -1,4 +1,4 @@
-/\.buildpath
+/\.*
 /vendor/
 /bin/
 /composer.phar
