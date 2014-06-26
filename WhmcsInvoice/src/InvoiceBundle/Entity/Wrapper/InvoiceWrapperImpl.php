@@ -66,6 +66,11 @@ class InvoiceWrapperImpl implements InvoiceWrapper
         return $this->invoiceItems;
     }
 
+    /**
+     * 
+     * @param InvoiceDetail $invoiceDetail
+     * @return \InvoiceBundle\Entity\Wrapper\InvoiceDetailWrapper
+     */
     private function /*InvoiceDetailWrapper*/ adaptInvoiceDetail(InvoiceDetail $invoiceDetail){
         
         $invoiceDetailsNew = new InvoiceDetailWrapper($invoiceDetail);
@@ -78,6 +83,12 @@ class InvoiceWrapperImpl implements InvoiceWrapper
         return $invoiceDetailsNew;
     }
     
+    /**
+     * 
+     * @param InvoiceDetail $invoiceDetail
+     * @param unknown $explodePartNumber
+     * @return \InvoiceBundle\Entity\Wrapper\InvoiceDetailWrapper
+     */
     private function /*InvoiceDetailWrapper*/ adaptInvoiceExplodedDetail(InvoiceDetail $invoiceDetail, $explodePartNumber){
         $invoiceDetailsNew = new InvoiceDetailWrapper($invoiceDetail);
         $invoiceDetailsNew->setDescription($this->getItemDesc($invoiceDetail->getDescription()));
@@ -89,7 +100,13 @@ class InvoiceWrapperImpl implements InvoiceWrapper
         return $invoiceDetailsNew;
     }
     
-    
+    /**
+     * 
+     * @param InvoiceDetail $invoiceDetail
+     * @param unknown $count
+     * @param unknown $desciption
+     * @return \InvoiceBundle\Entity\Wrapper\InvoiceDetailWrapper
+     */
     private function /*InvoiceDetailWrapper*/ adaptPrepaidInvoiceDetail(InvoiceDetail $invoiceDetail, $count, $desciption){
         $invoiceDetailsNew = new InvoiceDetailWrapper($invoiceDetail);
         $invoiceDetailsNew->setDescription($desciption);
@@ -102,13 +119,27 @@ class InvoiceWrapperImpl implements InvoiceWrapper
         return $invoiceDetailsNew;
     }
 
+    /**
+     * 
+     * @param InvoiceDetail $invoiceDetails
+     * @param unknown $taxRate
+     * @param string $explodePartNumber
+     * @return string
+     */
     private  function /*string*/ calculateNetPrice(InvoiceDetail $invoiceDetails, $taxRate, $explodePartNumber = null){
         $price = $invoiceDetails->getAmount();
         $price = ($explodePartNumber == null) ? $price : $price/$explodePartNumber;
         $price = (double) $price;
         return $this->priceFormat($price);
     }
-    
+
+    /**
+     * 
+     * @param InvoiceDetail $invoiceDetails
+     * @param unknown $taxRate
+     * @param string $explodePartNumber
+     * @return string
+     */
     private function /*string*/ calculateGrossPrice(InvoiceDetail $invoiceDetails, $taxRate, $explodePartNumber = null){
         $price = $invoiceDetails->getAmount() * (1 + $taxRate/100);
         $price = $explodePartNumber == null ? $price : $price/$explodePartNumber;
@@ -116,6 +147,13 @@ class InvoiceWrapperImpl implements InvoiceWrapper
         return $this->priceFormat($price);
     }
     
+    /**
+     * 
+     * @param InvoiceDetail $invoiceDetails
+     * @param unknown $taxRate
+     * @param string $explodePartNumber
+     * @return string
+     */
     private function /*string*/ calculateTaxPrice(InvoiceDetail $invoiceDetails, $taxRate, $explodePartNumber = null){
         $price = $invoiceDetails->getAmount() * ($taxRate/100);
         $price = $explodePartNumber == null ? $price : $price/$explodePartNumber;
@@ -123,46 +161,94 @@ class InvoiceWrapperImpl implements InvoiceWrapper
         return $this->priceFormat($price);
     }
     
+    /**
+     * 
+     * @param unknown $description
+     * @return boolean
+     */
     private function /*boolean*/ shouldExplodeItem($description){
         preg_match($this->invoiceItemdDesciptionExplodeRegex, $description, $m);
         return !empty($m);
     }
     
+    /**
+     * 
+     * @param unknown $description
+     * @return unknown
+     */
     private function /*string*/ getItemDesc($description){
         preg_match($this->invoiceItemdDesciptionExplodeRegex, $description, $m);
         return  $m[2];
     }
     
+    /**
+     * 
+     * @param unknown $description
+     * @return unknown
+     */
     private function /*int*/ getItemCount($description){
         preg_match($this->invoiceItemdDesciptionExplodeRegex, $description, $m);
         return $m[1];
     }
 
+    /**
+     * 
+     * @param unknown $description
+     * @return boolean
+     */
     private function isLoadPrepaid($description){
         preg_match($this->prepaidLoadRegex, $description, $m);
         return (count($m) == 2);
     }
     
+    /**
+     * 
+     * @param unknown $description
+     * @return unknown
+     */
     private function getCountLoadPoint($description){
         preg_match($this->prepaidLoadRegex, $description, $m);
         return $m[1];
     }
 
+    /**
+     * 
+     * @param unknown $description
+     * @return boolean
+     */
     private function isOrderPrepaid($description){
         preg_match($this->prepaidOrderRegex, $description, $m);
         return (count($m) == 3);
     }
     
+    /**
+     * 
+     * @param unknown $description
+     * @return unknown
+     */
     private function getCountOrderPoint($description){
         preg_match($this->prepaidOrderRegex, $description, $m);
         return $m[1];
     }
     
+    /**
+     * 
+     * @param unknown $description
+     * @return unknown
+     */
     private function getCountOrderPointDecrtiption($description){
         preg_match($this->prepaidOrderRegex, $description, $m);
         return $m[2];
     }
     
+    /**
+     * 
+     * @param unknown $price
+     * @param string $sep
+     * @param number $precision
+     * @param string $skipDecimals
+     * @return string
+     */
     private function /*string*/ priceFormat($price, $sep = ',', $precision = 2, $skipDecimals = FALSE)
     {
         if ($skipDecimals && ($price - floor($price) == 0)){
